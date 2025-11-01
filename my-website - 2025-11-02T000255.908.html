@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📱 Phone Camera Stream (WebRTC)</title>
+<style>
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #000000, #1a1a1a);
+  color: #00ff99;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+}
+h2 {
+  color: #00ff99;
+  text-shadow: 0 0 10px #00ff99;
+}
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 15px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,255,153,0.2);
+}
+video {
+  width: 100%;
+  border-radius: 12px;
+  border: 2px solid #00ff99;
+  margin-top: 15px;
+}
+button {
+  margin: 10px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 10px;
+  background: #00ff99;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.2s;
+}
+button:hover {
+  background: #00cc77;
+}
+input {
+  padding: 10px;
+  width: 80%;
+  max-width: 250px;
+  border-radius: 8px;
+  border: 1px solid #00ff99;
+  background: #111;
+  color: #00ff99;
+  text-align: center;
+}
+#status {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #aaa;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>📷 Phone Camera Stream</h2>
+  <video id="localVideo" autoplay playsinline muted></video>
+  <video id="remoteVideo" autoplay playsinline></video>
+  <div>
+    <button id="startBtn">🎥 Start Camera</button><br>
+    <input id="peerIdInput" placeholder="Enter Remote ID">
+    <button id="callBtn">📞 Call</button>
+  </div>
+  <p>Your ID: <span id="myId" style="color:#fff;">...</span></p>
+  <p id="status">Status: Waiting...</p>
+</div>
+
+<!-- PeerJS library -->
+<script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+<script>
+const localVideo = document.getElementById('localVideo');
+const remoteVideo = document.getElementById('remoteVideo');
+const startBtn = document.getElementById('startBtn');
+const callBtn = document.getElementById('callBtn');
+const peerIdInput = document.getElementById('peerIdInput');
+const myIdSpan = document.getElementById('myId');
+const statusText = document.getElementById('status');
+
+let localStream;
+const peer = new Peer(undefined, { host: 'peerjs.com', secure: true, port: 443 });
+
+peer.on('open', id => {
+  myIdSpan.textContent = id;
+  statusText.textContent = '✅ Ready. Share your ID with your friend.';
+});
+
+peer.on('error', err => {
+  console.error(err);
+  alert('PeerJS Error: ' + err);
+});
+
+peer.on('call', call => {
+  statusText.textContent = '📞 Incoming call...';
+  call.answer(localStream);
+  call.on('stream', remoteStream => {
+    remoteVideo.srcObject = remoteStream;
+    statusText.textContent = '📡 Connected!';
+  });
+  call.on('close', () => statusText.textContent = '❌ Call ended');
+});
+
+startBtn.onclick = async () => {
+  try {
+    localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    localVideo.srcObject = localStream;
+    statusText.textContent = '🎥 Camera started. Share your ID.';
+  } catch (e) {
+    alert('Camera not available or permission denied: ' + e);
+  }
+};
+
+callBtn.onclick = () => {
+  const remoteId = peerIdInput.value.trim();
+  if (!remoteId) return alert('⚠️ Please enter a Remote ID first!');
+  const call = peer.call(remoteId, localStream);
+  statusText.textContent = '🔄 Calling...';
+  call.on('stream', remoteStream => {
+    remoteVideo.srcObject = remoteStream;
+    statusText.textContent = '📡 Connected!';
+  });
+  call.on('close', () => statusText.textContent = '❌ Call ended');
+};
+</script>
+</body>
+</html>
