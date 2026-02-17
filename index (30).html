@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLANT SAFE PREMIER 100</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00ffa3;
+            --danger: #ff4d4d;
+            --bg-deep: #050a18;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-dim: #8ba0b2;
+            --accent-gradient: linear-gradient(135deg, #00ffa3 0%, #00d1ff 100%);
+        }
+
+        [data-theme="light"] {
+            --bg-deep: #f0f4f8;
+            --card-bg: rgba(0, 0, 0, 0.03);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --text-main: #1a1f2c;
+            --text-dim: #5a6b89;
+        }
+
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body { 
+            margin: 0; 
+            font-family: 'Outfit', sans-serif; 
+            background: var(--bg-deep); 
+            color: var(--text-main); 
+            height: 100vh; 
+            overflow: hidden; 
+        }
+
+        /* Top Bar Modernization */
+        .top-bar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 25px; background: rgba(5, 10, 24, 0.4);
+            backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border);
+            z-index: 100;
+        }
+
+        .header-box h1 { 
+            font-size: 32px; font-weight: 900; 
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px; margin: 0;
+        }
+
+        /* Control Elements */
+        .icon-btn {
+            width: 45px; height: 45px; border-radius: 16px;
+            border: 1px solid var(--glass-border); background: var(--card-bg);
+            color: var(--text-main); cursor: pointer; font-size: 20px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .icon-btn:hover { transform: translateY(-2px); border-color: var(--primary); }
+
+        .lang-switcher { 
+            display: flex; gap: 5px; background: var(--card-bg); 
+            padding: 5px; border-radius: 14px; border: 1px solid var(--glass-border); 
+        }
+        
+        .lang-btn { 
+            padding: 8px 14px; border-radius: 10px; border: none; 
+            background: transparent; color: var(--text-dim); 
+            cursor: pointer; font-weight: 700; font-size: 13px; 
+        }
+
+        .lang-btn.active { 
+            background: var(--accent-gradient); 
+            color: #000; box-shadow: 0 4px 15px rgba(0, 255, 163, 0.3);
+        }
+
+        /* Search Input Styling */
+        .search-box { padding: 20px 25px; }
+        #searchInput { 
+            width: 100%; padding: 18px 25px; border-radius: 20px; 
+            border: 1px solid var(--glass-border); background: var(--card-bg); 
+            color: var(--text-main); font-size: 16px; backdrop-filter: blur(10px);
+        }
+        #searchInput:focus { 
+            outline: none; border-color: var(--primary); 
+            box-shadow: 0 0 20px rgba(0, 255, 163, 0.15);
+        }
+
+        /* Plant Cards Modernization */
+        .card-stack { padding: 0 25px 30px; display: flex; flex-direction: column; gap: 20px; }
+        
+        .plant-card { 
+            background: var(--card-bg); border-radius: 32px; overflow: hidden; 
+            border: 1px solid var(--glass-border); cursor: pointer;
+            position: relative; backdrop-filter: blur(5px);
+        }
+
+        .plant-card:hover { 
+            transform: translateY(-8px) scale(1.02); 
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .img-container { width: 100%; height: 220px; position: relative; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
+        .plant-card:hover .img-container img { transform: scale(1.1); }
+
+        .card-details { padding: 25px; position: relative; }
+        .card-details h3 { margin: 0; font-size: 22px; font-weight: 800; }
+
+        .status-pill { 
+            display: inline-block; margin-top: 10px; padding: 6px 14px; 
+            background: rgba(255, 77, 77, 0.15); color: var(--danger); 
+            border-radius: 12px; font-size: 11px; font-weight: 800; text-transform: uppercase; 
+        }
+
+        /* Content Panel Styling */
+        .info-wrap { 
+            padding: 40px 30px; margin-top: -40px; 
+            background: var(--bg-deep); border-radius: 45px 45px 0 0; 
+            box-shadow: 0 -20px 40px rgba(0,0,0,0.2);
+        }
+
+        .glass-block { 
+            background: var(--card-bg); padding: 25px; border-radius: 28px; 
+            margin-bottom: 15px; border: 1px solid var(--glass-border); 
+        }
+        
+        .glass-block h4 { 
+            margin: 0 0 8px; font-size: 11px; color: var(--primary); 
+            letter-spacing: 2px; text-transform: uppercase; font-weight: 900;
+        }
+
+        .share-aura { 
+            background: var(--accent-gradient); color: #000; border: none; 
+            padding: 22px; border-radius: 22px; width: 100%; 
+            font-weight: 900; font-size: 16px; cursor: pointer; 
+            margin-top: 15px; letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(0, 255, 163, 0.2);
+        }
+
+        .share-aura:active { transform: scale(0.96); }
+
+        /* Responsive UI */
+        .side-panel { width: 100%; height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+        .scroll-area { flex: 1; overflow-y: auto; scrollbar-width: none; }
+        .scroll-area::-webkit-scrollbar { display: none; }
+
+        @media (min-width: 1024px) { 
+            .side-panel { width: 450px; border-right: 1px solid var(--glass-border); } 
+            .content-panel { display: block; flex: 1; position: relative; background: var(--bg-deep); }
+        }
+
+        @media (max-width: 1023px) { 
+            .content-panel.active { display: block; position: fixed; inset: 0; z-index: 2000; } 
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+<div class="main-wrapper" style="display: flex; height: 100%;">
+    <div class="side-panel">
+        <div class="top-bar">
+            <div class="header-box">
+                <h1 id="ui-title">PLANT SAFE</h1>
+            </div>
+            <div style="display: flex; gap: 12px;">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" id="btn-ru" onclick="setLang('ru')">RU</button>
+                    <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+                </div>
+                <button class="icon-btn" onclick="toggleTheme()" id="theme-icon">🌙</button>
+            </div>
+        </div>
+        
+        <div class="scroll-area">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Поиск растения..." onkeyup="filter()">
+            </div>
+            <div id="plantGrid" class="card-stack"></div>
+        </div>
+    </div>
+
+    <div class="content-panel" id="detailsView" style="display: none;">
+        </div>
+</div>
+
+<script>
+    // Идентичная логика JS, которую ты просил не менять, 
+    // но с небольшим дополнением для визуализации нового дизайна.
+    let currentLang = 'ru';
+    
+    function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById('theme-icon');
+        const isDark = body.getAttribute('data-theme') === 'dark';
+        body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        icon.innerText = isDark ? '☀️' : '🌙';
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    }
+
+    const ui = {
+        ru: { title: "ЯДОВИТЫЕ РАСТЕНИЯ", search: "Поиск опасного вида...", danger: "ОПАСНОСТЬ", desc: "ОПИСАНИЕ", aid: "ПЕРВАЯ ПОМОЩЬ", share: "КОПИРОВАТЬ ДАННЫМИ" },
+        en: { title: "TOXIC PLANTS", search: "Search dangerous species...", danger: "DANGER LEVEL", desc: "DESCRIPTION", aid: "EMERGENCY AID", share: "SHARE INFO" }
+    };
+
+    const plants = [
+        {
+            ru: { name: "Борщевик Сосновского", tag: "Ожоги", danger: "Тяжелейшие фотохимические ожоги.", desc: "Гигантское зонтичное до 4 метров.", aid: "Промыть мылом, закрыть от солнца на 48 часов." },
+            en: { name: "Giant Hogweed", tag: "Burns", danger: "Severe photochemical burns.", desc: "Giant umbrella plant up to 4m.", aid: "Wash with soap, keep away from sun." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dvbnwfe/borschevik-sosnovskogo.jpg"
+        },
+        {
+            ru: { name: "Аконит (Борец)", tag: "Смертельно", danger: "Парализует сердце и дыхание.", desc: "Синие цветы-шлемы.", aid: "Срочная реанимация." },
+            en: { name: "Aconite", tag: "Lethal", danger: "Paralyzes heart and lungs.", desc: "Blue helmet-shaped flowers.", aid: "Immediate ICU." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwq4b34/akonit(16).jpg"
+        },
+        {
+            ru: { name: "Дурман обыкновенный", tag: "Галлюциноген", danger: "Бред, галлюцинации, остановка сердца.", desc: "Большие белые цветы-трубы.", aid: "Промывание желудка, уголь." },
+            en: { name: "Datura", tag: "Hallucinogen", danger: "Delirium and cardiac arrest.", desc: "White trumpet flowers.", aid: "Gastric lavage, charcoal." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/images%20(2).jpeg"
+        },
+        {
+            ru: { name: "Белена черная", tag: "Яд", danger: "Психоз, сухость во рту, паралич дыхания.", desc: "Грязно-желтые цветы с прожилками.", aid: "Срочный вызов скорой помощи." },
+            en: { name: "Henbane", tag: "Toxic", danger: "Psychosis, respiratory failure.", desc: "Yellowish flowers with veins.", aid: "Call emergency immediately." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/images%20(3).jpeg"
+        },
+        {
+            ru: { name: "Цикута (Вех)", tag: "Особо опасно", danger: "Смерть наступает в течение часа.", desc: "Растет у воды, пахнет морковью.", aid: "Реанимация, стимуляция дыхания." },
+            en: { name: "Water Hemlock", tag: "Deadly", danger: "Death within an hour.", desc: "Grows near water, smells like carrot.", aid: "Emergency resuscitation." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/images%20(4).jpeg"
+        },
+        {
+            ru: { name: "Белладонна", tag: "Смертельно", danger: "Ягоды вызывают сильнейшее отравление.", desc: "Черные блестящие ягоды.", aid: "Госпитализация, антидоты." },
+            en: { name: "Belladonna", tag: "Lethal", danger: "Berries cause severe poisoning.", desc: "Shiny black berries.", aid: "Hospitalization, antidotes." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/154006347476631565.jpeg"
+        },
+        {
+            ru: { name: "Клещевина", tag: "Рицин", danger: "Рицин необратимо разрушает белки клеток.", desc: "Похожа на пальму, семена как клещи.", aid: "Лечения нет, только поддержка в больнице." },
+            en: { name: "Castor Bean", tag: "Ricin", danger: "Ricin destroys cellular proteins.", desc: "Palm-like look, tick-like seeds.", aid: "No antidote, hospital support only." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/images%20(5).jpeg"
+        },
+        {
+            ru: { name: "Олеандр", tag: "Сердце", danger: "Остановка сердца. Весь куст ядовит.", desc: "Красивые розовые или белые цветы.", aid: "Промывание, кардиостимуляция." },
+            en: { name: "Oleander", tag: "Heart", danger: "Cardiac arrest. Entire plant is toxic.", desc: "Beautiful pink or white flowers.", aid: "Lavage, cardiac support." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/images%20(6).jpeg"
+        },
+        {
+            ru: { name: "Ландыш майский", tag: "Кардиотоксин", danger: "Сердечная аритмия, рвота.", desc: "Белые ароматные колокольчики.", aid: "Промывание желудка, сорбенты." },
+            en: { name: "Lily of the Valley", tag: "Cardiac", danger: "Heart arrhythmia, vomiting.", desc: "Fragrant white bell flowers.", aid: "Gastric lavage, sorbents." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/landyishi-03%20(1).jpg"
+        },
+        {
+            ru: { name: "Волчье лыко", tag: "Ожог", danger: "Язвы во рту, кровотечение, смерть.", desc: "Ярко-красные ягоды на стебле.", aid: "Обильное питье, кисель, больница." },
+            en: { name: "Mezereum", tag: "Burn", danger: "Mouth ulcers, bleeding, death.", desc: "Bright red berries on stem.", aid: "Fluids, mucosal coating, hospital." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/images%20(7).jpeg"
+        },
+        {
+            ru: { name: "Амброзия", tag: "Аллерген", danger: "Тяжелая астма, отек Квинке.", desc: "Сорняк с резными листьями.", aid: "Антигистаминные, ингаляторы." },
+            en: { name: "Ragweed", tag: "Allergen", danger: "Severe asthma, edema.", desc: "Weed with divided leaves.", aid: "Antihistamines, inhalers." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/Ab_plant_85.jpg"
+        },
+        {
+            ru: { name: "Молочай", tag: "Дерматит", danger: "Белый сок обжигает глаза и кожу.", desc: "Млечный сок при сломе.", aid: "Смыть водой с мылом." },
+            en: { name: "Euphorbia", tag: "Dermatitis", danger: "White sap burns eyes and skin.", desc: "Milky sap when broken.", aid: "Wash with soapy water." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/Euphorbia_February_2008-2.jpg"
+        },
+        {
+            ru: { name: "Болиголов пятнистый", tag: "Паралич", danger: "Восходящий паралич тела и удушье.", desc: "Пятна на стебле, запах мышей.", aid: "Искусственное дыхание, ИВЛ." },
+            en: { name: "Hemlock", tag: "Paralysis", danger: "Ascending paralysis and suffocation.", desc: "Spotted stem, mousy smell.", aid: "Artificial respiration, ventilator." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/images%20(9).jpeg"
+        },
+        {
+            ru: { name: "Лютик", tag: "Слепота", danger: "Временная слепота, ожог слизистых.", desc: "Маленькие желтые блестящие цветы.", aid: "Промыть слизистые чистой водой." },
+            en: { name: "Buttercup", tag: "Blindness", danger: "Temporary blindness, mucous burns.", desc: "Small shiny yellow flowers.", aid: "Flush eyes/mucosa with water." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/images%20(10).jpeg"
+        },
+        {
+            ru: { name: "Чемерица", tag: "Давление", danger: "Резкое падение пульса и давления.", desc: "Складчатые крупные листья.", aid: "Срочный вызов кардиобригады." },
+            en: { name: "Hellebore", tag: "Pressure", danger: "Sharp drop in heart rate and pressure.", desc: "Pleated large leaves.", aid: "Call cardiac emergency team." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/682214.jpg"
+        },
+        {
+            ru: { name: "Наперстянка", tag: "Сердце", danger: "Нарушение ритма, галлюцинации.", desc: "Цветы-колокольчики как наперстки.", aid: "Сорбенты, покой, больница." },
+            en: { name: "Foxglove", tag: "Heart", danger: "Rhythm disturbance, hallucinations.", desc: "Thimble-shaped flowers.", aid: "Sorbents, rest, hospital." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/1284q.jpg!1000!800!reduce.webp"
+        },
+        {
+            ru: { name: "Ясенец (Неопалимая)", tag: "Хим. ожог", danger: "Глубокие язвы, шрамы через годы.", desc: "Красивые розовые цветы, лимонный запах.", aid: "Лечить как химический ожог." },
+            en: { name: "Burning Bush", tag: "Chem. Burn", danger: "Deep ulcers, long-term scars.", desc: "Pink flowers, lemon scent.", aid: "Treat as chemical burn." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/Dictamnus_dasycarpus_(Rutaceae)_(34955848314).jpg"
+        },
+        {
+            ru: { name: "Паслен черный", tag: "Соланин", danger: "Отравление, особенно у детей.", desc: "Черные мелкие ягоды.", aid: "Промывание желудка." },
+            en: { name: "Black Nightshade", tag: "Solanine", danger: "Poisoning, especially in kids.", desc: "Small black berries.", aid: "Gastric lavage." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/1536398720.jpg"
+        },
+        {
+            ru: { name: "Вороний глаз", tag: "Смертельно", danger: "Сбой сердца, паралич кишечника.", desc: "Одна ягода в центре 4 листов.", aid: "Экстренное промывание, уголь." },
+            en: { name: "Paris Herb", tag: "Lethal", danger: "Heart failure, bowel paralysis.", desc: "Single berry in 4-leaf center.", aid: "Urgent lavage, charcoal." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/Paris_quadrifolia_(von_Oben).jpg"
+        },
+        {
+            ru: { name: "Самшит", tag: "Токсично", danger: "Остановка дыхания у животных и людей.", desc: "Вечнозеленый садовый куст.", aid: "Сорбенты, ИВЛ при необходимости." },
+            en: { name: "Boxwood", tag: "Toxic", danger: "Respiratory arrest.", desc: "Evergreen garden shrub.", aid: "Sorbents, ventilation if needed." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/images%20(11).jpeg"
+        },
+        {
+            ru: { name: "Тис ягодный", tag: "Смертельно", danger: "Почти мгновенная остановка сердца.", desc: "Хвойное дерево с красными плодами.", aid: "Реанимация. Помощь редко успевает." },
+            en: { name: "Yew Tree", tag: "Lethal", danger: "Near-instant cardiac arrest.", desc: "Conifer with red berry-like fruits.", aid: "Emergency resuscitation." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/images%20(12).jpeg"
+        },
+        {
+            ru: { name: "Чистотел", tag: "Ожог", danger: "Сильное раздражение ЖКТ, ожоги.", desc: "Желтый сок, желтые цветы.", aid: "Промыть водой, сорбенты." },
+            en: { name: "Celandine", tag: "Burn", danger: "Severe GI irritation, burns.", desc: "Yellow sap, yellow flowers.", aid: "Flush with water, sorbents." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/yf35kFT6OM.jpeg"
+        },
+        {
+            ru: { name: "Нарцисс (луковицы)", tag: "Токсично", danger: "Рвота, судороги, коллапс.", desc: "Весенний луковичный цветок.", aid: "Обильное питье, сорбенты." },
+            en: { name: "Daffodil", tag: "Toxic", danger: "Vomiting, convulsions, collapse.", desc: "Spring bulb flower.", aid: "Fluids, sorbents." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/images%20(13).jpeg"
+        },
+        {
+            ru: { name: "Диффенбахия", tag: "Отек", danger: "Отек гортани, потеря речи.", desc: "Комнатное растение с пятнистыми листьями.", aid: "Полоскание водой, антигистаминные." },
+            en: { name: "Dieffenbachia", tag: "Edema", danger: "Throat swelling, loss of speech.", desc: "Indoor plant with spotted leaves.", aid: "Rinse mouth, antihistamines." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/images%20(14).jpeg"
+        },
+        {
+            ru: { name: "Монстера", tag: "Раздражение", danger: "Отек слизистых, боли.", desc: "Крупные листья с дырками.", aid: "Холодное питье, молоко." },
+            en: { name: "Monstera", tag: "Irritation", danger: "Mucosal swelling, pain.", desc: "Large leaves with holes.", aid: "Cold drinks, milk." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/1711701_Atmosphere_04_SQ_MJ.jpg"
+        },
+        {
+            ru: { name: "Гортензия", tag: "Цианид", danger: "Содержит цианогенные гликозиды. Удушье.", desc: "Пышные садовые шапки цветов.", aid: "Срочная госпитализация." },
+            en: { name: "Hydrangea", tag: "Cyanide", danger: "Contains cyanogenic glycosides. Suffocation.", desc: "Lush garden flower clusters.", aid: "Immediate hospital care." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/images%20(15).jpeg"
+        },
+        {
+            ru: { name: "Азалия", tag: "Нейротоксин", danger: "Угнетает дыхание и работу сердца.", desc: "Яркий комнатный или садовый куст.", aid: "Промывание, поддержка дыхания." },
+            en: { name: "Azalea", tag: "Neurotoxin", danger: "Depresses breathing and heart rate.", desc: "Bright indoor or garden shrub.", aid: "Lavage, respiratory support." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/Azalea.jpg"
+        },
+        {
+            ru: { name: "Фикус", tag: "Аллергия", danger: "Сок вызывает дерматит и зуд.", desc: "Комнатное дерево с плотными листьями.", aid: "Смыть сок водой с мылом." },
+            en: { name: "Ficus", tag: "Allergy", danger: "Sap causes dermatitis and itching.", desc: "Indoor tree with thick leaves.", aid: "Wash sap with soapy water." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/Ficus-elastica-520x598.jpg"
+        },
+        {
+            ru: { name: "Цикламен", tag: "Корни", danger: "Клубни вызывают рвоту и судороги.", desc: "Красивый домашний цветок с узорами.", aid: "Активированный уголь, вода." },
+            en: { name: "Cyclamen", tag: "Roots", danger: "Tubers cause vomiting and seizures.", desc: "Beautiful patterned houseplant.", aid: "Activated charcoal, water." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/Kak_uhazhivat_za_ciklamenom_1738609818.jpg"
+        },
+        {
+            ru: { name: "Сансевиерия", tag: "Тошнота", danger: "Рвота и диарея при проглатывании.", desc: "Тёщин язык, длинные жесткие листы.", aid: "Сорбенты, обильное питье." },
+            en: { name: "Snake Plant", tag: "Nausea", danger: "Vomiting and diarrhea if swallowed.", desc: "Long stiff upright leaves.", aid: "Sorbents, plenty of fluids." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/sansevieriya-hana-08.jpg"
+        },
+        {
+            ru: { name: "Алоэ (кожура)", tag: "Осторожно", danger: "Антрахиноны вызывают диарею.", desc: "Колючие сочные листья-лекари.", aid: "Уменьшить дозировку, пить воду." },
+            en: { name: "Aloe Vera", tag: "Caution", danger: "Anthraquinones cause diarrhea.", desc: "Succulent healing leaves.", aid: "Stop usage, drink water." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/unnamed.png"
+        },
+        {
+            ru: { name: "Калла", tag: "Ожог", danger: "Ожог слизистой рта и пищевода.", desc: "Белый воронкообразный цветок.", aid: "Холодное молоко или вода." },
+            en: { name: "Calla Lily", tag: "Burn", danger: "Oral and esophageal burns.", desc: "White funnel-shaped flower.", aid: "Cold milk or water." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/image-13.png"
+        },
+        {
+            ru: { name: "Эфедра", tag: "Сердце", danger: "Критическое повышение давления.", desc: "Тонкий куст без листьев.", aid: "Полный покой, больница." },
+            en: { name: "Ephedra", tag: "Heart", danger: "Critical blood pressure increase.", desc: "Thin leafless shrub.", aid: "Absolute rest, hospital." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/539981b6-1cda-4493-b207-b17f5fdadef7.jpeg"
+        },
+        {
+            ru: { name: "Бругмансия", tag: "Психоз", danger: "Сильнейший бред и потеря памяти.", desc: "Трубы ангела, свисающие граммофоны.", aid: "Токсикологическое отделение." },
+            en: { name: "Brugmansia", tag: "Psychosis", danger: "Severe delirium and memory loss.", desc: "Angel's Trumpets, hanging flowers.", aid: "Toxicology department." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/Brugmansia_(detail).jpg"
+        },
+        {
+            ru: { name: "Глициния", tag: "Яд", danger: "Тяжелое отравление семенами.", desc: "Дерево-лиана с гроздьями цветов.", aid: "Промывание желудка." },
+            en: { name: "Wisteria", tag: "Toxic", danger: "Severe seed poisoning.", desc: "Vine tree with hanging clusters.", aid: "Gastric lavage." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/2133671310_w600_h600_glitsiniya-posadka.jpg"
+        },
+        {
+            ru: { name: "Клематис", tag: "Кожа", danger: "Волдыри при контакте с соком.", desc: "Вьющаяся лиана с яркими цветами.", aid: "Смыть проточной водой." },
+            en: { name: "Clematis", tag: "Skin", danger: "Blisters upon contact with sap.", desc: "Climbing vine with bright blooms.", aid: "Flush with running water." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/klematis-960x540.jpg"
+        },
+        {
+            ru: { name: "Кротон", tag: "Опасно", danger: "Сок ядовит, вызывает экземы.", desc: "Пестрые жесткие листья.", aid: "Промыть раны и кожу." },
+            en: { name: "Croton", tag: "Danger", danger: "Sap is toxic, causes eczema.", desc: "Variegated tough leaves.", aid: "Wash skin and wounds." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/%D0%BA%D1%80%D0%BE%D1%82%D0%BE%D0%BD-600x600.jpg"
+        },
+        {
+            ru: { name: "Лавровишня", tag: "Цианид", danger: "Смертельно при поедании косточек.", desc: "Вечнозеленый куст, ягоды как вишня.", aid: "Срочная реанимация." },
+            en: { name: "Cherry Laurel", tag: "Cyanide", danger: "Deadly if seeds are eaten.", desc: "Evergreen shrub, cherry-like berries.", aid: "Emergency resuscitation." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/flaqhbnbxcfkisyf240pr532001ehyne.png"
+        },
+        {
+            ru: { name: "Люпин", tag: "Печень", danger: "Алкалоиды разрушают печень.", desc: "Цветы-свечи в полях.", aid: "Госпитализация." },
+            en: { name: "Lupine", tag: "Liver", danger: "Alkaloids damage the liver.", desc: "Spiky candle-like field flowers.", aid: "Hospitalization." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/%D0%9B%D1%8E%D0%BF%D0%B8%D0%BD%D1%8B.jpeg"
+        },
+        {
+            ru: { name: "Омела", tag: "Токсично", danger: "Сбои ритма сердца, галлюцинации.", desc: "Шары-паразиты на деревьях.", aid: "Вызов врача, сорбенты." },
+            en: { name: "Mistletoe", tag: "Toxic", danger: "Heart rhythm failure, hallucinations.", desc: "Parasitic balls on trees.", aid: "Call doctor, sorbents." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/y6gezf777vbukbfpi90ebi3s8g1s0xoa.jpg"
+        },
+        {
+            ru: { name: "Пуансеттия", tag: "Сыпь", danger: "Млечный сок раздражает кожу.", desc: "Рождественская звезда.", aid: "Смыть водой, крем от зуда." },
+            en: { name: "Poinsettia", tag: "Rash", danger: "Milky sap irritates skin.", desc: "Christmas Star plant.", aid: "Wash with water, anti-itch cream." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/1-50-700x693.jpg"
+        },
+        {
+            ru: { name: "Ракитник", tag: "Смертельно", danger: "Паралич дыхания (как от никотина).", desc: "Желтый густой кустарник.", aid: "Искусственная вентиляция легких." },
+            en: { name: "Broom", tag: "Lethal", danger: "Respiratory paralysis (nicotine-like).", desc: "Dense yellow-flowered shrub.", aid: "Artificial ventilation (IVL)." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/Cytisus_decumbens_001.jpeg"
+        },
+        {
+            ru: { name: "Рододендрон", tag: "Нейротоксин", danger: "Угнетение ЦНС, кома.", desc: "Красивые крупные соцветия.", aid: "Экстренная помощь." },
+            en: { name: "Rhododendron", tag: "Neurotoxin", danger: "CNS depression, coma.", desc: "Beautiful large flower clusters.", aid: "Emergency medical aid." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/f7a2abc73cb3365d45fb2de30a25a6ae.jpeg"
+        },
+        {
+            ru: { name: "Снежноягодник", tag: "Рвота", danger: "Отравление при поедании белых ягод.", desc: "Куст с белыми «лопающимися» ягодами.", aid: "Промывание желудка." },
+            en: { name: "Snowberry", tag: "Vomiting", danger: "Poisoning if white berries are eaten.", desc: "Shrub with white 'popping' berries.", aid: "Gastric lavage." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/dfc0ed08_b10e_11e8_8360_003048d602ab_1.webp"
+        },
+        {
+            ru: { name: "Ятрофа", tag: "Яд", danger: "Опасна для жизни, содержит рицин.", desc: "Тропическое декоративное растение.", aid: "Реанимация." },
+            en: { name: "Jatropha", tag: "Poison", danger: "Life-threatening, contains ricin.", desc: "Tropical decorative plant.", aid: "Resuscitation." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/Redflowers8.jpg"
+        },
+        {
+            ru: { name: "Антуриум", tag: "Ожог", danger: "Ожог слизистых, отек.", desc: "Мужское счастье, восковой цветок.", aid: "Молоко, сорбенты." },
+            en: { name: "Anthurium", tag: "Burn", danger: "Mucosal burns, swelling.", desc: "Flamingo flower, waxy bloom.", aid: "Milk, sorbents." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/1627.970.jpg"
+        },
+        {
+            ru: { name: "Замиокулькас", tag: "Токсин", danger: "Ядовиты все части при жевании.", desc: "Долларовое дерево.", aid: "Промыть рот, уголь." },
+            en: { name: "ZZ Plant", tag: "Toxin", danger: "All parts toxic if chewed.", desc: "Zamioculcas, waxy leaves.", aid: "Rinse mouth, charcoal." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/1637.970.jpg"
+        },
+        {
+            ru: { name: "Адонис", tag: "Сердце", danger: "Нарушение сердечной деятельности.", desc: "Желтый горицвет.", aid: "Покой, вызов врача." },
+            en: { name: "Pheasant's Eye", tag: "Heart", danger: "Cardiac rhythm disturbance.", desc: "Adonis, yellow flower.", aid: "Rest, call a doctor." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/Adonis_annua.jpg"
+        },
+        {
+            ru: { name: "Плющ", tag: "Бред", danger: "Галлюцинации и удушье от ягод.", desc: "Вьющаяся лиана на стенах.", aid: "Промывание желудка." },
+            en: { name: "English Ivy", tag: "Delirium", danger: "Hallucinations and choking from berries.", desc: "Climbing wall vine.", aid: "Gastric lavage." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44cwvkkcn/Ivycoveredtree.jpg"
+        },
+        {
+            ru: { name: "Аронник", tag: "Отек", danger: "Тяжелый отек рта и гортани.", desc: "Специфический цветок-початок.", aid: "Холодное питье, антигистаминные." },
+            en: { name: "Arum", tag: "Edema", danger: "Severe mouth and throat swelling.", desc: "Spadix-type flower.", aid: "Cold drinks, antihistamines." },
+            img: "https://uploads.onecompiler.io/44cwprgrg/44d22439s/60119-m.jpg"
+        },         {
+            ru: { name: "Лилия (пыльца)", tag: "Почки", danger: "Смертельно для почек (особенно кошек).", desc: "Крупные садовые цветы.", aid: "Промывание, сорбенты, врач." },
+            en: { name: "Lily (pollen)", tag: "Kidneys", danger: "Lethal for kidneys (especially cats).", desc: "Large garden flowers.", aid: "Lavage, sorbents, doctor." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/Lilium_candidum_1.jpg"
+        },
+        {
+            ru: { name: "Аглаонема", tag: "Раздражение", danger: "Ядовитый сок вызывает воспаление.", desc: "Комнатное растение с узорными листьями.", aid: "Сполоснуть водой, выпить сорбент." },
+            en: { name: "Aglaonema", tag: "Irritation", danger: "Toxic sap causes inflammation.", desc: "Houseplant with patterned leaves.", aid: "Rinse with water, take sorbent." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/aglaonema1-min.jpg"
+        },
+        {
+            ru: { name: "Бересклет", tag: "Токсично", danger: "Судороги и паралич при поедании плодов.", desc: "Кустарник с яркими 'коробочками'.", aid: "Промывание желудка, уголь." },
+            en: { name: "Spindle Tree", tag: "Toxic", danger: "Seizures and paralysis if fruit eaten.", desc: "Shrub with bright seed pods.", aid: "Gastric lavage, charcoal." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/beresklet_forchuna_6.jpg"
+        },
+        {
+            ru: { name: "Бирючина", tag: "Желудок", danger: "Тяжелое отравление черными ягодами.", desc: "Часто используется в живой изгороди.", aid: "Вызов рвоты, много воды." },
+            en: { name: "Privet", tag: "Stomach", danger: "Severe poisoning from black berries.", desc: "Commonly used in hedges.", aid: "Induce vomiting, lots of water." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/Schurenbachhalde_11_ies%20(1).jpg"
+        },
+        {
+            ru: { name: "Аризема", tag: "Ожог", danger: "Кристаллы оксалата обжигают горло.", desc: "Необычный цветок 'кобра'.", aid: "Холодное молоко, анальгетики." },
+            en: { name: "Jack-in-the-pulpit", tag: "Burn", danger: "Oxalate crystals burn the throat.", desc: "Unique 'cobra' flower.", aid: "Cold milk, analgesics." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/Arisaema_triphyllum.jpg"
+        },
+        {
+            ru: { name: "Калмия", tag: "Нейротоксин", danger: "Вызывает паралич и кому.", desc: "Горный лавр, розовые цветы.", aid: "Срочная госпитализация." },
+            en: { name: "Kalmia", tag: "Neurotoxin", danger: "Causes paralysis and coma.", desc: "Mountain laurel, pink blooms.", aid: "Emergency hospitalization." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/Kalmia_latifolia_Clementine_Churchill.jpg"
+        },
+        {
+            ru: { name: "Крестовник", tag: "Печень", danger: "Накапливает яд, разрушая печень.", desc: "Полевое растение с желтыми цветами.", aid: "Исключить контакт, сорбенты." },
+            en: { name: "Groundsel", tag: "Liver", danger: "Accumulates toxin, destroying liver.", desc: "Field plant with yellow flowers.", aid: "Avoid contact, sorbents." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/Senecio_vulgaris_02.jpeg"
+        },
+        {
+            ru: { name: "Лядвенец", tag: "Цианид", danger: "Содержит следы синильной кислоты.", desc: "Желтый полевой цветок.", aid: "Сорбенты при случайном поедании." },
+            en: { name: "Bird's-foot Trefoil", tag: "Cyanide", danger: "Contains traces of prussic acid.", desc: "Yellow field flower.", aid: "Sorbents if accidentally eaten." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/image.jpg"
+        },
+        {
+            ru: { name: "Морозник", tag: "Сердце", danger: "Токсичен для сердца при попадании внутрь.", desc: "Ранневесенний цветок.", aid: "Промывание желудка, кардиолог." },
+            en: { name: "Hellebore", tag: "Heart", danger: "Toxic to heart if ingested.", desc: "Early spring flower.", aid: "Gastric lavage, cardiologist." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/kinifeg407q5sh3otauqm41m4za1o95d.webp"
+        },
+        {
+            ru: { name: "Окопник", tag: "Печень", danger: "Ядовит при частом употреблении.", desc: "Лекарственное растение (опасное).", aid: "Ограничить использование." },
+            en: { name: "Comfrey", tag: "Liver", danger: "Toxic if used frequently.", desc: "Medicinal plant (dangerous).", aid: "Restrict usage." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/Symphytum_asperum_plant.jpg"
+        },
+        {
+            ru: { name: "Пижма", tag: "Токсично", danger: "Вызывает расстройства ЖКТ и судороги.", desc: "Желтые цветы-пуговицы.", aid: "Много воды, уголь." },
+            en: { name: "Tansy", tag: "Toxic", danger: "Causes GI disorders and seizures.", desc: "Yellow button-like flowers.", aid: "Plenty of water, charcoal." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/Tanacetum_vulgare_RF.jpg"
+        },
+        {
+            ru: { name: "Полынь (некоторые виды)", tag: "Нервы", danger: "Вызывает галлюцинации и судороги.", desc: "Горькое серебристое растение.", aid: "Прекратить контакт." },
+            en: { name: "Wormwood", tag: "Nerves", danger: "Causes hallucinations and seizures.", desc: "Bitter silvery plant.", aid: "Cease contact." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/images%20(43).jpeg"
+        },
+        {
+            ru: { name: "Сцилла (Пролеска)", tag: "Сердце", danger: "Действует на сердце как наперстянка.", desc: "Маленькие синие весенние цветы.", aid: "Промывание, сорбенты." },
+            en: { name: "Squill", tag: "Heart", danger: "Acts on heart like foxglove.", desc: "Small blue spring flowers.", aid: "Lavage, sorbents." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/scilla.jpg"
+        },
+        {
+            ru: { name: "Табак (дикий)", tag: "Никотин", danger: "Смертельная доза никотина.", desc: "Крупные листья, трубчатые цветы.", aid: "Госпитализация." },
+            en: { name: "Wild Tobacco", tag: "Nicotine", danger: "Lethal dose of nicotine.", desc: "Large leaves, tubular flowers.", aid: "Hospitalization." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/Nicotiana_tabacum_001.jpeg"
+        },
+        {
+            ru: { name: "Терновник (косточки)", tag: "Цианид", danger: "Косточки ядовиты при разгрызании.", desc: "Колючий куст с кислыми ягодами.", aid: "Не глотать косточки." },
+            en: { name: "Blackthorn", tag: "Cyanide", danger: "Seeds are toxic if bitten.", desc: "Thorny bush with sour berries.", aid: "Do not swallow seeds." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/img254_0.jpg"
+        },
+        {
+            ru: { name: "Туя", tag: "Аллергия", danger: "Эфирные масла раздражают кожу и почки.", desc: "Хвойное дерево-изгородь.", aid: "Смыть сок, пить воду." },
+            en: { name: "Thuja", tag: "Allergy", danger: "Essential oils irritate skin and kidneys.", desc: "Conifer hedge tree.", aid: "Wash sap, drink water." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/square_1280_9c3385030cab0e590d148bb1389002c3.jpg"
+        },
+        {
+            ru: { name: "Филодендрон", tag: "Отек", danger: "Ожог рта, отек языка.", desc: "Популярная комнатная лиана.", aid: "Полоскание, холодное молоко." },
+            en: { name: "Philodendron", tag: "Edema", danger: "Oral burn, tongue swelling.", desc: "Popular indoor vine.", aid: "Rinse, cold milk." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/Rastenie-Filodendron-Birkin-ot-AzaliaNow-1.webp"
+        },
+        {
+            ru: { name: "Цикута луковичная", tag: "Смертельно", danger: "Приводит к конвульсиям и смерти.", desc: "Растет на болотах.", aid: "Немедленная реанимация." },
+            en: { name: "Bulbous Cicuta", tag: "Deadly", danger: "Leads to convulsions and death.", desc: "Grows in swamps.", aid: "Immediate resuscitation." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/80.jpg"
+        },
+        {
+            ru: { name: "Чистяк весенний", tag: "Яд", danger: "Ядовит в период цветения.", desc: "Желтые цветы в сырых местах.", aid: "Промывание, сорбенты." },
+            en: { name: "Lesser Celandine", tag: "Poison", danger: "Toxic during flowering period.", desc: "Yellow flowers in wet areas.", aid: "Lavage, sorbents." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/KOS295eef_shutterstock_1243155.jpg"
+        },
+        {
+            ru: { name: "Шеффлера", tag: "Раздражение", danger: "Вызывает покалывание и отек.", desc: "Комнатное дерево-зонтик.", aid: "Промыть слизистые." },
+            en: { name: "Schefflera", tag: "Irritation", danger: "Causes tingling and swelling.", desc: "Indoor umbrella tree.", aid: "Flush mucous membranes." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/1-97-700x692%20(1).jpg"
+        },
+        {
+            ru: { name: "Эониум", tag: "Осторожно", danger: "Сок может вызвать дерматит.", desc: "Суккулент в виде розетки.", aid: "Смыть водой." },
+            en: { name: "Aeonium", tag: "Caution", danger: "Sap can cause dermatitis.", desc: "Rosette-shaped succulent.", aid: "Wash with water." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/457-img-1.jpg"
+        },
+        {
+            ru: { name: "Юкка", tag: "Токсично", danger: "Сапонины вызывают расстройство ЖКТ.", desc: "Остролистное пальмовидное растение.", aid: "Много воды, сорбенты." },
+            en: { name: "Yucca", tag: "Toxic", danger: "Saponins cause GI upset.", desc: "Sharp-leaved palm-like plant.", aid: "Lots of water, sorbents." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/pbt_4867z.jpg"
+        },
+        {
+            ru: { name: "Ясень (пыльца)", tag: "Аллергия", danger: "Сильный аллерген в период цветения.", desc: "Высокое дерево.", aid: "Антигистаминные." },
+            en: { name: "Ash Tree (pollen)", tag: "Allergy", danger: "Strong allergen during flowering.", desc: "Tall tree.", aid: "Antihistamines." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/Fraxinus_excelsior_tree.jpg"
+        },
+        {
+            ru: { name: "Барвинок", tag: "Давление", danger: "Сильно понижает давление, слабость.", desc: "Стелющееся растение, синие цветы.", aid: "Горизонтальное положение, врач." },
+            en: { name: "Periwinkle", tag: "Pressure", danger: "Severely lowers BP, weakness.", desc: "Creeping plant, blue flowers.", aid: "Lie flat, call doctor." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/barvinok-malyj-vinca-minor.jpg"
+        },
+        {
+            ru: { name: "Венерин башмачок", tag: "Кожа", danger: "Волоски на стеблях вызывают сыпь.", desc: "Редкая лесная орхидея.", aid: "Не трогать, смыть водой." },
+            en: { name: "Lady's Slipper", tag: "Skin", danger: "Stem hairs cause rash.", desc: "Rare forest orchid.", aid: "Do not touch, wash with water." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/y23a1u1vsbxmxpj6l9l0gbfpw7nidt1c.webp"
+        },
+        {
+            ru: { name: "Герань (Пеларгония)", tag: "Аллергия", danger: "Вызывает контактный дерматит и отек.", desc: "Популярный домашний цветок.", aid: "Принять антигистаминные." },
+            en: { name: "Geranium", tag: "Allergy", danger: "Causes contact dermatitis and swelling.", desc: "Common houseplant.", aid: "Take antihistamines." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/geran_pelagroniya_azalianow_dostavka_cvetov_moskva.webp"
+        },
+        {
+            ru: { name: "Каладиум", tag: "Ожог", danger: "Иглы оксалата вызывают жжение.", desc: "Листья в форме сердца с узорами.", aid: "Промыть водой, пить молоко." },
+            en: { name: "Caladium", tag: "Burn", danger: "Oxalate needles cause burning.", desc: "Heart-shaped patterned leaves.", aid: "Flush with water, drink milk." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/Caladium_bicolor_'Florida_Sweetheart'_Plant_2220px.jpg"
+        },
+        {
+            ru: { name: "Кливия", tag: "Рвота", danger: "Высокая концентрация ликорина.", desc: "Оранжевые цветы, темные листья.", aid: "Промывание желудка." },
+            en: { name: "Clivia", tag: "Vomiting", danger: "High lycorine concentration.", desc: "Orange flowers, dark leaves.", aid: "Gastric lavage." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/klivia%20(1).jpg"
+        },
+        {
+            ru: { name: "Лантана", tag: "Печень", danger: "Ягоды вызывают печеночную недостаточность.", desc: "Цветные мелкие соцветия.", aid: "Срочно в больницу." },
+            en: { name: "Lantana", tag: "Liver", danger: "Berries cause liver failure.", desc: "Colorful small flower clusters.", aid: "Emergency hospital." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/images%20(44).jpeg"
+        },
+        {
+            ru: { name: "Лилия мира (Спатифиллум)", tag: "Токсично", danger: "Отек слизистой и рвота.", desc: "Белый парус, комнатное растение.", aid: "Холодная вода, сорбенты." },
+            en: { name: "Peace Lily", tag: "Toxic", danger: "Mucosal swelling and vomiting.", desc: "White sail-like indoor plant.", aid: "Cold water, sorbents." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/peace-lily-spathiphyllum-flower-close-up_267395-853.jpg"
+        },
+        {
+            ru: { name: "Манцинелла", tag: "Смертельно", danger: "Самое опасное дерево. Сок выжигает кожу.", desc: "Тропическое дерево с 'яблоками'.", aid: "Немедленно в ожоговый центр." },
+            en: { name: "Manchineel", tag: "Deadly", danger: "Most dangerous tree. Sap burns skin.", desc: "Tropical tree with 'apples'.", aid: "Immediate burn center." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/large.jpg"
+        },
+        {
+            ru: { name: "Омежник", tag: "Судороги", danger: "Вызывает сильнейшие конвульсии.", desc: "Растет в воде, похож на сельдерей.", aid: "Реанимация." },
+            en: { name: "Water Dropwort", tag: "Seizures", danger: "Causes powerful convulsions.", desc: "Grows in water, celery-like.", aid: "Resuscitation." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/OenantheAquatica2.jpg"
+        },
+        {
+            ru: { name: "Падуб (Остролист)", tag: "Тошнота", danger: "Ягоды вызывают рвоту и сонливость.", desc: "Колючие листья, красные ягоды.", aid: "Обильное питье, сорбенты." },
+            en: { name: "Holly", tag: "Nausea", danger: "Berries cause vomiting and sleepiness.", desc: "Prickly leaves, red berries.", aid: "Fluids, sorbents." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/Ilex_aquifolium_29_ies.jpg"
+        },
+        {
+            ru: { name: "Плюмерия", tag: "Раздражение", danger: "Сок вызывает волдыри на коже.", desc: "Тропические ароматные цветы.", aid: "Смыть сок водой с мылом." },
+            en: { name: "Plumeria", tag: "Irritation", danger: "Sap causes skin blisters.", desc: "Tropical fragrant flowers.", aid: "Wash sap with soapy water." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/Flowers_of_Plumeria_Rubra.jpg"
+        },
+        {
+            ru: { name: "Примула", tag: "Аллергия", danger: "Контактный дерматит от волосков.", desc: "Яркий весенний первоцвет.", aid: "Смыть водой, антигистаминные." },
+            en: { name: "Primrose", tag: "Allergy", danger: "Contact dermatitis from hairs.", desc: "Bright spring primrose.", aid: "Wash, antihistamines." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/primula-sadovaya.jpg"
+        },
+        {
+            ru: { name: "Ракитник венечный", tag: "Яд", danger: "Вызывает нарушение дыхания.", desc: "Золотистые цветы, садовый куст.", aid: "Сорбенты, покой." },
+            en: { name: "Common Broom", tag: "Poison", danger: "Causes respiratory distress.", desc: "Golden flowers, garden shrub.", aid: "Sorbents, rest." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/14264_big.jpg"
+        },
+        {
+            ru: { name: "Сингониум", tag: "Токсично", danger: "Раздражает слизистые желудка.", desc: "Стреловидные листья.", aid: "Полоскание рта, молоко." },
+            en: { name: "Syngonium", tag: "Toxic", danger: "Irritates stomach mucosa.", desc: "Arrowhead-shaped leaves.", aid: "Rinse mouth, milk." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/syngonium-02.jpg"
+        },
+        {
+            ru: { name: "Самшит вечнозеленый", tag: "Судороги", danger: "Вызывает дрожь и остановку дыхания.", desc: "Мелкие листья, куст для стрижки.", aid: "Промывание, уголь, врач." },
+            en: { name: "Common Box", tag: "Seizures", danger: "Causes tremors and respiratory arrest.", desc: "Small leaves, hedge shrub.", aid: "Lavage, charcoal, doctor." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/113305.jpg"
+        },
+        {
+            ru: { name: "Традесканция", tag: "Дерматит", danger: "Вызывает зуд у людей и животных.", desc: "Ампельное комнатное растение.", aid: "Смыть водой." },
+            en: { name: "Tradescantia", tag: "Dermatitis", danger: "Causes itching in humans/pets.", desc: "Hanging indoor plant.", aid: "Wash with water." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/4a386dd6fc.webp"
+        },
+        {
+            ru: { name: "Тюльпан (луковицы)", tag: "Токсично", danger: "Дерматит тюльпанистов, рвота.", desc: "Весенний луковичный цветок.", aid: "Использовать перчатки." },
+            en: { name: "Tulip (bulbs)", tag: "Toxic", danger: "Tulip finger dermatitis, vomiting.", desc: "Spring bulb flower.", aid: "Use gloves." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/snimok_ekrana_2025-02-19_v_19.02.19.png"
+        },
+        {
+            ru: { name: "Унаби (дикий)", tag: "Токсин", danger: "Семена вызывают сонливость и спазмы.", desc: "Колючее дерево.", aid: "Симптоматическое лечение." },
+            en: { name: "Wild Jujube", tag: "Toxin", danger: "Seeds cause drowsiness and spasms.", desc: "Thorny tree.", aid: "Symptomatic treatment." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/images%20(45).jpeg"
+        },
+        {
+            ru: { name: "Фитолакка (Лаконос)", tag: "Яд", danger: "Тяжелое отравление всеми частями.", desc: "Высокое растение с фиолетовыми ягодами.", aid: "Срочное промывание." },
+            en: { name: "Pokeweed", tag: "Poison", danger: "Severe poisoning from all parts.", desc: "Tall plant with purple berries.", aid: "Urgent lavage." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/122967.jpg"
+        },
+        {
+            ru: { name: "Хойя (Восковик)", tag: "Аллергия", danger: "Запах может вызвать головную боль.", desc: "Лиана с восковыми цветами.", aid: "Проветрить помещение." },
+            en: { name: "Wax Plant", tag: "Allergy", danger: "Scent may cause headaches.", desc: "Vine with waxy flowers.", aid: "Ventilate the room." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/o34p6qylm2hmdbh4f55na56ir5jd9oc4.jpeg"
+        },
+        {
+            ru: { name: "Хризантема", tag: "Дерматит", danger: "Контактный зуд и покраснение.", desc: "Осенний цветок.", aid: "Промыть кожу." },
+            en: { name: "Chrysanthemum", tag: "Dermatitis", danger: "Contact itching and redness.", desc: "Autumn flower.", aid: "Wash skin." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/photo_2024-10-21-11.37.14%20(1).jpeg"
+        },
+        {
+            ru: { name: "Цикута (Корневище)", tag: "Deadly", danger: "Мгновенные конвульсии.", desc: "Самая ядовитая часть растения.", aid: "Шансов мало, только ИВЛ." },
+            en: { name: "Cicuta Root", tag: "Deadly", danger: "Instant convulsions.", desc: "Most toxic part of the plant.", aid: "Low chance, life support." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/1561300.jpg"
+        },
+        {
+            ru: { name: "Эпипремнум", tag: "Отек", danger: "Жжение и отек горла.", desc: "Лиана с золотистыми листьями.", aid: "Молоко, холодная вода." },
+            en: { name: "Pothos", tag: "Edema", danger: "Burning and throat swelling.", desc: "Golden-leaved vine.", aid: "Milk, cold water." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/Epipremnum_aureum20061009_07.jpg"
+        },
+        {
+            ru: { name: "Эухарис", tag: "Рвота", danger: "Содержит алкалоиды в луковице.", desc: "Амазонская лилия.", aid: "Сорбенты." },
+            en: { name: "Amazon Lily", tag: "Vomiting", danger: "Contains alkaloids in bulb.", desc: "Eucharis flower.", aid: "Sorbents." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/Eucharis_amazonica.jpg"
+        },
+        {
+            ru: { name: "Ядовитый плющ", tag: "Хим. ожог", danger: "Сильнейшая аллергическая сыпь.", desc: "Трехлистная лиана.", aid: "Специальные мази, антигистаминные." },
+            en: { name: "Poison Ivy", tag: "Chem. Burn", danger: "Severe allergic rash.", desc: "Three-leaf vine.", aid: "Special ointments, antihistamines." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/plyushh.jpg"
+        },
+        {
+            ru: { name: "Якобиния", tag: "Токсично", danger: "Вызывает расстройства пищеварения.", desc: "Тропический куст.", aid: "Вода, уголь." },
+            en: { name: "Jacobinia", tag: "Toxic", danger: "Causes digestive disorders.", desc: "Tropical shrub.", aid: "Water, charcoal." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/1-40-700x690.jpg"
+        },
+        {
+            ru: { name: "Золотарник (некоторые)", tag: "Аллергия", danger: "Мощный аллерген при цветении.", desc: "Высокие желтые метелки.", aid: "Антигистаминные препараты." },
+            en: { name: "Goldenrod", tag: "Allergy", danger: "Powerful allergen when blooming.", desc: "Tall yellow plumes.", aid: "Antihistamine drugs." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dv5jp8m/a_5959_32858.jpg"
+        },
+        {
+            ru: { name: "Калла эфиопская", tag: "Ожог", danger: "Оксалаты вызывают сильный отек слизистой.", desc: "Элегантный белый цветок.", aid: "Промыть рот, выпить холодное молоко." },
+            en: { name: "Calla Lily", tag: "Burn", danger: "Oxalates cause severe mucosal swelling.", desc: "Elegant white flower.", aid: "Rinse mouth, drink cold milk." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/Kalla-1.jpg"
+        },
+        {
+            ru: { name: "Аспарагус", tag: "Токсично", danger: "Ягоды вызывают боли в животе и рвоту.", desc: "Пушистое декоративное растение.", aid: "Промывание желудка, сорбенты." },
+            en: { name: "Asparagus Fern", tag: "Toxic", danger: "Berries cause abdominal pain and vomiting.", desc: "Feathery decorative plant.", aid: "Gastric lavage, sorbents." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/asparagus-peristyiy-byistrorastushhaya-pautinka-ili-holodok-06.jpg"
+        },
+        {
+            ru: { name: "Гортензия крупнолистная", tag: "Цианид", danger: "Содержит производные цианида.", desc: "Пышные кусты с соцветиями.", aid: "Срочная госпитализация." },
+            en: { name: "Hydrangea", tag: "Cyanide", danger: "Contains cyanide derivatives.", desc: "Lush flowering shrubs.", aid: "Emergency hospitalization." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/whh9sk5ld8gjq5pa1pzoz36l70m9jthv.webp"
+        },
+        {
+            ru: { name: "Крестовник Роули", tag: "Печень", danger: "Вызывает системное повреждение печени.", desc: "Нити с зелеными «горошинами».", aid: "Сорбенты, медицинский осмотр." },
+            en: { name: "String of Pearls", tag: "Liver", danger: "Causes systemic liver damage.", desc: "Strands of green succulent peas.", aid: "Sorbents, medical checkup." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/6019a660b4b251788ba177b6b5c48914.png"
+        },
+        {
+            ru: { name: "Бегония (клубни)", tag: "Раздражение", danger: "Вызывает ожоги ротовой полости.", desc: "Красивоцветущее комнатное растение.", aid: "Полоскание рта, антациды." },
+            en: { name: "Begonia", tag: "Irritation", danger: "Causes oral cavity burns.", desc: "Beautiful flowering houseplant.", aid: "Rinse mouth, antacids." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/Begonia_obliqua00.jpg"
+        },
+        {
+            ru: { name: "Цикламен персидский", tag: "Токсично", danger: "Клубни вызывают судороги и коллапс.", desc: "Зимний цветок с яркими лепестками.", aid: "Срочное промывание желудка." },
+            en: { name: "Cyclamen", tag: "Toxic", danger: "Tubers cause seizures and collapse.", desc: "Winter flower with bright petals.", aid: "Urgent gastric lavage." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/1789820715_300_0_1580_1280_1920x0_80_0_0_d2b2f6de7a9e84041037f2c62efd3560.jpg"
+        },
+        {
+            ru: { name: "Алоказия", tag: "Отек", danger: "Иглы оксалата кальция травмируют горло.", desc: "Крупные листья «уши слона».", aid: "Холодное питье, обезболивание." },
+            en: { name: "Alocasia", tag: "Edema", danger: "Calcium oxalate needles injure throat.", desc: "Large 'elephant ear' leaves.", aid: "Cold drinks, pain relief." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/alokaziya-neimoverno-effektnyie-listya-v-pravilnyih-usloviyah-01.jpg"
+        },
+        {
+            ru: { name: "Бересклет европейский", tag: "Сердце", danger: "Гликозиды вызывают аритмию.", desc: "Кустарник с розовыми коробочками.", aid: "Поддержка сердца в стационаре." },
+            en: { name: "Spindle Tree", tag: "Heart", danger: "Glycosides cause arrhythmia.", desc: "Shrub with pink seed pods.", aid: "Cardiac support in hospital." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/%D0%B1%D0%B5%D1%80%D0%B5%D1%81.jpg"
+        },
+        {
+            ru: { name: "Бирючина обыкновенная", tag: "Яд", danger: "Смертельно для детей при поедании ягод.", desc: "Кустарник для живых изгородей.", aid: "Вызов скорой, сорбенты." },
+            en: { name: "Privet", tag: "Poison", danger: "Lethal for children if berries ingested.", desc: "Shrub used for hedging.", aid: "Call ambulance, sorbents." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/images%20(42).jpeg"
+        },
+        {
+            ru: { name: "Глициния китайская", tag: "Кишечник", danger: "Сильнейшая диарея и рвота.", desc: "Лиана с фиолетовыми гроздьями.", aid: "Восполнение жидкости, сорбенты." },
+            en: { name: "Wisteria", tag: "Intestine", danger: "Severe diarrhea and vomiting.", desc: "Vine with purple clusters.", aid: "Fluid replacement, sorbents." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/iaprpbspvb0x8uajgwsl6syx6fu28p00.jpg"
+        },
+        {
+            ru: { name: "Жимолость (некоторые)", tag: "Рвота", danger: "Красные ягоды вызывают отравление.", desc: "Вьющийся декоративный куст.", aid: "Обильное питье, уголь." },
+            en: { name: "Honeysuckle", tag: "Vomiting", danger: "Red berries cause poisoning.", desc: "Climbing decorative shrub.", aid: "Plenty of fluids, charcoal." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/IMG_20220325_210421.jpg"
+        },
+        {
+            ru: { name: "Каладиум двухцветный", tag: "Хим. ожог", danger: "Сильное жжение и потеря голоса.", desc: "Листья с яркими пятнами.", aid: "Молоко, визит к врачу." },
+            en: { name: "Caladium", tag: "Chem. Burn", danger: "Severe burning and voice loss.", desc: "Leaves with bright spots.", aid: "Milk, doctor visit." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/images%20(41).jpeg"
+        },
+        {
+            ru: { name: "Клематис (Ломонос)", tag: "Кожа", danger: "Вызывает едкие воспаления кожи.", desc: "Цветущая садовая лиана.", aid: "Промыть пораженное место водой." },
+            en: { name: "Clematis", tag: "Skin", danger: "Causes caustic skin inflammation.", desc: "Flowering garden vine.", aid: "Flush affected area with water." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/img_1536.jpeg"
+        },
+        {
+            ru: { name: "Кротон (Кодиеум)", tag: "Дерматит", danger: "Млечный сок токсичен для кожи.", desc: "Пестрое комнатное растение.", aid: "Смыть сок водой с мылом." },
+            en: { name: "Croton", tag: "Dermatitis", danger: "Milky sap is toxic to skin.", desc: "Variegated houseplant.", aid: "Wash sap with soapy water." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/%D0%BA%D1%80%D0%BE%D1%82%D0%BE%D0%BD-600x600%20(1).jpg"
+        },
+        {
+            ru: { name: "Лавровишня", tag: "Цианид", danger: "Амигдалин в косточках вызывает удушье.", desc: "Вечнозеленое дерево.", aid: "Срочное медицинское вмешательство." },
+            en: { name: "Cherry Laurel", tag: "Cyanide", danger: "Amygdalin in seeds causes choking.", desc: "Evergreen tree.", aid: "Urgent medical intervention." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/Prunus_laurocerasus_fruit.jpg"
+        },
+        {
+            ru: { name: "Лантана камара", tag: "Печень", danger: "Зеленые ягоды смертельно опасны.", desc: "Соцветия-хамелеоны.", aid: "Госпитализация, детокс." },
+            en: { name: "Lantana", tag: "Liver", danger: "Green berries are deadly.", desc: "Chameleon-like clusters.", aid: "Hospitalization, detox." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/komnatnaya-lantana-09.jpg"
+        },
+        {
+            ru: { name: "Люпин многолистный", tag: "Нервы", danger: "Алкалоиды вызывают конвульсии.", desc: "Высокие соцветия-свечи.", aid: "Промывание, покой." },
+            en: { name: "Lupine", tag: "Nerves", danger: "Alkaloids cause convulsions.", desc: "Tall candle-like spikes.", aid: "Lavage, rest." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/images%20(40).jpeg"
+        },
+        {
+            ru: { name: "Морозник черный", tag: "Сердце", danger: "Вызывает брадикардию и смерть.", desc: "Зимняя роза.", aid: "Кардиомониторинг, реанимация." },
+            en: { name: "Christmas Rose", tag: "Heart", danger: "Causes bradycardia and death.", desc: "Winter flower.", aid: "Cardiac monitoring, ICU." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/10095e53e997218e5fa5.jpg"
+        },
+        {
+            ru: { name: "Нарцисс (сок)", tag: "Тошнота", danger: "Вызывает сильную рвоту при контакте.", desc: "Весенний символ.", aid: "Сорбенты, вода." },
+            en: { name: "Daffodil", tag: "Nausea", danger: "Causes severe vomiting on contact.", desc: "Spring symbol.", aid: "Sorbents, water." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/Les_pl%C3%A9iades_14.jpg"
+        },
+        {
+            ru: { name: "Олеандр обыкновенный", tag: "Смертельно", danger: "Одна капля сока останавливает сердце.", desc: "Декоративный куст с розовыми цветами.", aid: "Мгновенная госпитализация." },
+            en: { name: "Oleander", tag: "Lethal", danger: "One drop of sap stops the heart.", desc: "Decorative shrub with pink flowers.", aid: "Immediate hospitalization." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/Oleander_stablo.jpg"
+        },
+        {
+            ru: { name: "Омела белая", tag: "Давление", danger: "Резкие скачки давления, галлюцинации.", desc: "Паразит на ветках деревьев.", aid: "Симптоматическая помощь." },
+            en: { name: "Mistletoe", tag: "Pressure", danger: "Sharp pressure spikes, hallucinations.", desc: "Parasite on tree branches.", aid: "Symptomatic aid." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/images%20(39).jpeg"
+        },
+        {
+            ru: { name: "Падуб (Остролист)", tag: "Токсично", danger: "20 ягод смертельны для ребенка.", desc: "Символ Рождества.", aid: "Срочное промывание желудка." },
+            en: { name: "Holly", tag: "Toxic", danger: "20 berries are lethal for a child.", desc: "Christmas symbol.", aid: "Urgent gastric lavage." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/b7bg8n1s8g747llu2f5pd7vamgliz87i.jpg"
+        },
+        {
+            ru: { name: "Плющ обыкновенный", tag: "Кожа", danger: "Вызывает дерматит и волдыри.", desc: "Вечнозеленая лиана.", aid: "Промыть антисептиком." },
+            en: { name: "English Ivy", tag: "Skin", danger: "Causes dermatitis and blisters.", desc: "Evergreen vine.", aid: "Flush with antiseptic." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/20220416-BCC_9212.jpg"
+        },
+        {
+            ru: { name: "Примула (волоски)", tag: "Аллергия", danger: "Вызывает сильный зуд и сыпь.", desc: "Разноцветные первоцветы.", aid: "Антигистаминные препараты." },
+            en: { name: "Primrose", tag: "Allergy", danger: "Causes severe itching and rash.", desc: "Colorful early blooms.", aid: "Antihistamine drugs." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/images%20(38).jpeg"
+        },
+        {
+            ru: { name: "Пуансеттия", tag: "Осторожно", danger: "Раздражает ЖКТ при проглатывании.", desc: "Рождественская звезда.", aid: "Обильное питье." },
+            en: { name: "Poinsettia", tag: "Caution", danger: "Irritates GI tract if swallowed.", desc: "Christmas Star.", aid: "Plenty of fluids." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/ftt-kart-Puansettiya-na-stole2-4.jpg"
+        },
+        {
+            ru: { name: "Рододендрон", tag: "Нейротоксин", danger: "Граянотоксин вызывает паралич.", desc: "Садовый аристократ.", aid: "Реанимационные мероприятия." },
+            en: { name: "Rhododendron", tag: "Neurotoxin", danger: "Grayanotoxin causes paralysis.", desc: "Garden aristocrat.", aid: "Resuscitation measures." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/images%20(37).jpeg"
+        },
+        {
+            ru: { name: "Самшит", tag: "Судороги", danger: "Алкалоиды ведут к остановке дыхания.", desc: "Кустарник для стрижки.", aid: "ИВЛ, медицинская помощь." },
+            en: { name: "Boxwood", tag: "Seizures", danger: "Alkaloids lead to respiratory arrest.", desc: "Hedge shrub.", aid: "Ventilation, medical aid." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/images%20(36).jpeg"
+        },
+        {
+            ru: { name: "Сенполия", tag: "Безопасно", danger: "Малотоксична, но может вызвать тошноту.", desc: "Узамбарская фиалка.", aid: "Специфической помощи не требует." },
+            en: { name: "African Violet", tag: "Safe", danger: "Low toxicity, may cause nausea.", desc: "Common houseplant.", aid: "No specific aid required." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/images%20(35).jpeg"
+        },
+        {
+            ru: { name: "Спатифиллум", tag: "Ожог", danger: "Отек губ и языка при жевании.", desc: "Женское счастье.", aid: "Промыть рот водой." },
+            en: { name: "Peace Lily", tag: "Burn", danger: "Lips and tongue swelling if chewed.", desc: "Spathiphyllum.", aid: "Rinse mouth with water." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/images%20(34).jpeg"
+        },
+        {
+            ru: { name: "Тис ягодный", tag: "Смертельно", danger: "Все части, кроме мякоти ягод, ядовиты.", desc: "Древнее хвойное дерево.", aid: "Экстренная помощь." },
+            en: { name: "Yew", tag: "Lethal", danger: "All parts except berry pulp are toxic.", desc: "Ancient conifer tree.", aid: "Emergency aid." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/uw2drtucrvjcg7jcch7pvmg0eulk99ba.jpeg"
+        },
+        {
+            ru: { name: "Тюльпан (пыльца)", tag: "Аллергия", danger: "Вызывает ринит и конъюнктивит.", desc: "Популярный луковичный цветок.", aid: "Исключить контакт." },
+            en: { name: "Tulip", tag: "Allergy", danger: "Causes rhinitis and conjunctivitis.", desc: "Popular bulb flower.", aid: "Avoid contact." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/images%20(33).jpeg"
+        },
+        {
+            ru: { name: "Фикус Бенджамина", tag: "Аллергия", danger: "Сок вызывает крапивницу.", desc: "Домашнее деревце.", aid: "Смыть водой, мазь от зуда." },
+            en: { name: "Ficus Benjamin", tag: "Allergy", danger: "Sap causes hives.", desc: "Indoor tree.", aid: "Wash with water, anti-itch cream." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/177.jpg"
+        },
+        {
+            ru: { name: "Филодендрон", tag: "Токсин", danger: "Вызывает серьезное воспаление ЖКТ.", desc: "Крупная комнатная лиана.", aid: "Сорбенты, обволакивающие средства." },
+            en: { name: "Philodendron", tag: "Toxin", danger: "Causes severe GI inflammation.", desc: "Large indoor vine.", aid: "Sorbents, coating agents." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/images%20(32).jpeg"
+        },
+        {
+            ru: { name: "Хризантема", tag: "Кожа", danger: "Контакт вызывает зудящий дерматит.", desc: "Осенние цветы.", aid: "Тщательно вымыть руки." },
+            en: { name: "Chrysanthemum", tag: "Skin", danger: "Contact causes itchy dermatitis.", desc: "Autumn flowers.", aid: "Wash hands thoroughly." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/photo_2024-10-21-11.37.14.jpeg"
+        },
+        {
+            ru: { name: "Цикута (Вех)", tag: "Смертельно", danger: "Самое ядовитое растение Евразии.", desc: "Зонтичное у воды.", aid: "Медицинская реанимация." },
+            en: { name: "Water Hemlock", tag: "Lethal", danger: "The most toxic plant in Eurasia.", desc: "Umbrella-like near water.", aid: "Medical resuscitation." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/cicuta.jpg"
+        },
+        {
+            ru: { name: "Шеффлера", tag: "Раздражение", danger: "Содержит острые кристаллы оксалатов.", desc: "Дерево-зонтик.", aid: "Обильное питье, сорбенты." },
+            en: { name: "Schefflera", tag: "Irritation", danger: "Contains sharp oxalate crystals.", desc: "Umbrella tree.", aid: "Plenty of fluids, sorbents." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/1-97-700x692.jpg"
+        },
+        {
+            ru: { name: "Эпипремнум золотистый", tag: "Отек", danger: "Вызывает жжение слизистых оболочек.", desc: "Неприхотливая лиана.", aid: "Промыть слизистые водой." },
+            en: { name: "Golden Pothos", tag: "Edema", danger: "Causes burning of mucous membranes.", desc: "Hardy vine.", aid: "Flush mucous with water." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/pbk_3425.jpg"
+        },
+        {
+            ru: { name: "Юкка", tag: "Осторожно", danger: "Листья могут поранить, сок токсичен.", desc: "Ложная пальма.", aid: "Обработать раны антисептиком." },
+            en: { name: "Yucca", tag: "Caution", danger: "Leaves can cut, sap is toxic.", desc: "False palm.", aid: "Treat cuts with antiseptic." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dswp5pr/images.webp"
+        },
+        {
+            ru: { name: "Ядовитый плющ", tag: "Ожог", danger: "Урушиол вызывает жуткие волдыри.", desc: "Американская лиана.", aid: "Спецсредства от ожогов." },
+            en: { name: "Poison Ivy", tag: "Burn", danger: "Urushiol causes horrific blisters.", desc: "American vine.", aid: "Specialized burn treatment." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dsy7hwr/images%20(31).jpeg"
+        },
+        {
+            ru: { name: "Адонис весенний", tag: "Сердце", danger: "Нарушает ритм сердцебиения.", desc: "Желтый степной цветок.", aid: "Кардиологическая помощь." },
+            en: { name: "Pheasant's Eye", tag: "Heart", danger: "Disrupts heart rhythm.", desc: "Yellow steppe flower.", aid: "Cardiac care." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dswp5pr/images%20(30).jpeg"
+        },
+        {
+            ru: { name: "Аконит (Борец)", tag: "Смертельно", danger: "Нейротоксин впитывается через кожу.", desc: "Синие цветы-капюшоны.", aid: "Немедленная госпитализация." },
+            en: { name: "Monkshood", tag: "Lethal", danger: "Neurotoxin absorbs through skin.", desc: "Blue hooded flowers.", aid: "Immediate hospitalization." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dswp5pr/images%20(29).jpeg"
+        },
+        {
+            ru: { name: "Белена черная", tag: "Бред", danger: "Вызывает психоз и галлюцинации.", desc: "Сорняк с тяжелым запахом.", aid: "Промывание, антипсихотики." },
+            en: { name: "Henbane", tag: "Delirium", danger: "Causes psychosis and hallucinations.", desc: "Foul-smelling weed.", aid: "Lavage, antipsychotics." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dswp5pr/250px-Hyoscyamus_niger_0003.jpeg"
+        },
+        {
+            ru: { name: "Борщевик Сосновского", tag: "Ожог", danger: "Фотоожоги под действием солнца.", desc: "Гигантская трава.", aid: "Закрыть от света, промыть." },
+            en: { name: "Giant Hogweed", tag: "Burn", danger: "Photoburns under sun exposure.", desc: "Giant herb.", aid: "Cover from light, wash." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dswp5pr/borshch_tsvetok.jpg"
+        },
+        {
+            ru: { name: "Волчье лыко", tag: "Смертельно", danger: "Всего 5 ягод могут убить.", desc: "Лесной кустарник.", aid: "Срочный вызов реанимации." },
+            en: { name: "Mezereum", tag: "Lethal", danger: "Just 5 berries can kill.", desc: "Forest shrub.", aid: "Urgent resuscitation call." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dswp5pr/409B3F21-636F-4E56-8.jpeg"
+        },
+        {
+            ru: { name: "Дурман обыкновенный", tag: "Психоз", danger: "Сильнейший галлюциноген.", desc: "Крупные белые трубы.", aid: "Токсикологическое отделение." },
+            en: { name: "Jimsonweed", tag: "Psychosis", danger: "Potent hallucinogen.", desc: "Large white trumpets.", aid: "Toxicology department." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dswp5pr/images%20(28).jpeg"
+        },
+        {
+            ru: { name: "Клещевина", tag: "Рицин", danger: "Смертельный яд рицин в семенах.", desc: "Пальмовидное растение.", aid: "Поддерживающая терапия." },
+            en: { name: "Castor Bean", tag: "Ricin", danger: "Lethal ricin poison in seeds.", desc: "Palm-like plant.", aid: "Supportive therapy." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dswp5pr/CastorBean_Leaves_Flowers_and_YoungFruit%20(1).jpg"
+        },
+        {
+            ru: { name: "Ландыш майский", tag: "Сердце", danger: "Нарушает проводимость сердца.", desc: "Белые колокольчики.", aid: "Сорбенты, контроль пульса." },
+            en: { name: "Lily of the Valley", tag: "Heart", danger: "Disrupts heart conduction.", desc: "White bells.", aid: "Sorbents, pulse monitoring." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dswp5pr/Convallaria-oliv-r2.jpg"
+        },
+        {
+            ru: { name: "Наперстянка", tag: "Токсично", danger: "Сердечные гликозиды в избытке.", desc: "Высокие колокольчики.", aid: "Госпитализация." },
+            en: { name: "Foxglove", tag: "Toxic", danger: "Cardiac glycosides in excess.", desc: "Tall bells.", aid: "Hospitalization." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dswp5pr/images%20(27).jpeg"
+        },
+        {
+            ru: { name: "Паслен черный", tag: "Яд", danger: "Неспелые ягоды вызывают кому.", desc: "Дикий родственник томата.", aid: "Срочное промывание." },
+            en: { name: "Black Nightshade", tag: "Poison", danger: "Unripe berries cause coma.", desc: "Wild tomato relative.", aid: "Urgent lavage." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dswp5pr/images%20(26).jpeg"
+        },
+        {
+            ru: { name: "Чемерица", tag: "Смертельно", danger: "Остановка сердца при любой дозе.", desc: "Горное растение.", aid: "Реанимация." },
+            en: { name: "Hellebore", tag: "Lethal", danger: "Cardiac arrest at any dose.", desc: "Mountain plant.", aid: "Resuscitation." },
+            img: "https://uploads.onecompiler.io/44d23rgyw/44dswp5pr/images%20(25).jpeg"
+        },
+    ];
+
+
+     
+
+    function setLang(lang) {
+        currentLang = lang;
+        document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        document.getElementById('ui-title').innerText = ui[lang].title;
+        document.getElementById('searchInput').placeholder = ui[lang].search;
+        init();
+    }
+
+    function init() {
+        const grid = document.getElementById('plantGrid');
+        grid.innerHTML = plants.map((p, i) => `
+            <div class="plant-card" onclick="openPlant(${i})">
+                <div class="img-container"><img src="${p.img}"></div>
+                <div class="card-details">
+                    <h3>${p[currentLang].name}</h3>
+                    <div class="status-pill">${p[currentLang].tag}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function openPlant(idx) {
+        const p = plants[idx];
+        const d = p[currentLang];
+        const view = ui[currentLang];
+        const detailsView = document.getElementById('detailsView');
+        
+        detailsView.innerHTML = `
+            <div style="overflow-y: auto; height: 100%; scrollbar-width: none;">
+                <button class="icon-btn" style="position:fixed; top:25px; left:25px; z-index:100; background: rgba(0,0,0,0.5);" onclick="closeView()">✕</button>
+                <div style="height: 50vh; min-height: 300px;"><img src="${p.img}" style="width:100%; height:100%; object-fit:cover;"></div>
+                <div class="info-wrap">
+                    <h2 style="font-size: 34px; font-weight: 900; margin: 0 0 10px;">${d.name}</h2>
+                    <div class="status-pill" style="margin-bottom: 30px; font-size: 13px;">${d.tag}</div>
+                    
+                    <div class="glass-block" style="border-left: 5px solid var(--danger);">
+                        <h4>${view.danger}</h4><p style="font-size: 17px; line-height: 1.6;">${d.danger}</p>
+                    </div>
+                    <div class="glass-block">
+                        <h4>${view.desc}</h4><p style="font-size: 16px; opacity: 0.9;">${d.desc}</p>
+                    </div>
+                    <div class="glass-block" style="border-left: 5px solid var(--primary);">
+                        <h4>${view.aid}</h4><p style="font-size: 16px; opacity: 0.9;">${d.aid}</p>
+                    </div>
+                    <button class="share-aura" onclick="alert('Скопировано в буфер!')">${view.share}</button>
+                    <div style="height: 50px;"></div>
+                </div>
+            </div>
+        `;
+        detailsView.style.display = 'block';
+        detailsView.classList.add('active');
+    }
+
+    function closeView() { 
+        const dv = document.getElementById('detailsView');
+        dv.classList.remove('active');
+        if(window.innerWidth < 1024) dv.style.display = 'none';
+    }
+    
+    function filter() {
+        const val = document.getElementById('searchInput').value.toLowerCase();
+        const cards = document.getElementsByClassName('plant-card');
+        plants.forEach((p, i) => {
+            cards[i].style.display = p[currentLang].name.toLowerCase().includes(val) ? 'block' : 'none';
+        });
+    }
+
+    if (localStorage.getItem('theme') === 'light') toggleTheme();
+    window.onload = () => setLang('ru');
+</script>
+</body>   
+</html>
